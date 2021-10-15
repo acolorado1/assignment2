@@ -1,6 +1,6 @@
-#RankBasedTest
+# RankBasedTest
 
-##DESCRIPTION: 
+## DESCRIPTION: 
 
 RankBasedTest is a script that takes a STRING.txt file format and a .gmt 
 file format and generates two lists of edge counts from
@@ -8,9 +8,9 @@ two networks and uses a rank based statistical test, specifically the Wilcoxon
 signed rank test, to calculate a p-value that describes whether the two
 lists are significantly different or not. 
 
-##Workflow
+## Workflow
 
-###Arguments 
+### Arguments 
 
 Here is a list of required and optional arguments that can be accessed by 
 typing **python RankBasedTest.py -h**: 
@@ -31,7 +31,7 @@ optional arguments:
   --nt NT, -n_trials NT
                         number of trials (default: 1000)
 ```
-###Inputs 
+### Inputs 
 
 Requires one file STRING.txt database, a .gmt format text file, an integer
 for the number of bins you want default is 128, and the number of trials
@@ -77,7 +77,7 @@ ARF5	PARD6A	0.194000
 ARF5	PDIA2	0.157397
 ...
 ```
-###Command
+### Command
 
 To run this program: 
 ```text
@@ -86,7 +86,7 @@ python "RankBasedTest.py" --GI "STRING.txt" --ef "Input.gmt.txt" --nb 128 --nt 1
 You can replace --GI and --ef with your own desired input files as well as change 
 the bin width (--nb) and the number of trials (--nt) you want to run.
 
-###Output 
+### Output 
 
 Prints two lists of edge node densities and a corresponding p-value. 
 ```text
