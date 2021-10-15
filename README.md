@@ -81,7 +81,7 @@ ARF5	PDIA2	0.157397
 
 To run this program: 
 ```text
-python "main.py" --GI "Input.gmt.txt" --ef "STRING.txt" --nb 128 --nt 1000
+python "RankBasedTest.py" --GI "STRING.txt" --ef "Input.gmt.txt" --nb 128 --nt 1000
 ```
 You can replace --GI and --ef with your own desired input files as well as change 
 the bin width (--nb) and the number of trials (--nt) you want to run.

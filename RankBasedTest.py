@@ -49,9 +49,9 @@ def dict_gene_interactions (f_cofunction_net): #input STRING.txt database file p
 
 ####Creats a dictionary of nodes and their degrees (number of connections), creates a sorted list of them by value from low to high and then creates a dictionary of bins and the genes in each bin
 ####Generates a graph using the 12 loci and measure the edge density (in this case the number of edges) and a graph of 12 nodes from the cofunction netwoek wherein the nodes have a similar degree
-def listofedgecounts (f_experimental,f_cofunction_net,n_bins,n_trials): #input .gmt file path, STRING.txt database file path, number of bins, number of trials
+def listofedgecounts (f_experimental,GI_file,n_bins,n_trials): #input .gmt file path, STRING.txt database file path, number of bins, number of trials
     loci_gene_dict = dict_loci(f_experimental)
-    gene_interaction_dict = dict_gene_interactions(f_cofunction_net)
+    gene_interaction_dict = dict_gene_interactions(GI_file)
     num_connections_dict = {} #dict of gene (key) and the number of nodes it connects to (value) is initialized
     for key in gene_interaction_dict:
         num_connections_dict[key] = len(gene_interaction_dict[key]) #for each gene (key) counts how many connections exist (value)
@@ -90,18 +90,19 @@ def stub_GA(experimental_and_CFN_edgecount_list): #inputs list of of lists with 
     return experimental_and_CFN_edgecount_list #returns input
 
 ####Performs a statistical test on the two lists of edge counts
-def rank_based_test(f_experimental,f_cofunction_net,n_bins,n_trials): #input .gmt file path, STRING.txt database file path, number of bins, number of trials
-    list_of_ec = listofedgecounts(f_experimental, f_cofunction_net, n_bins, n_trials) #generates list of edge counts for both networks
+def rank_based_test(f_experimental,GI_file,n_bins,n_trials): #input .gmt file path, STRING.txt database file path, number of bins, number of trials
+    list_of_ec = listofedgecounts(f_experimental, GI_file, n_bins, n_trials) #generates list of edge counts for both networks
     GA_edgecounts = stub_GA(list_of_ec) #stubbed genetic algorithm function
     pval = stats.wilcoxon(GA_edgecounts[0],GA_edgecounts[1])[1] #gets the p-value using the wilcoxon rank sum tset that returns a tuple where the index 1 contains the p-value
     print("CFN edge counts: ", GA_edgecounts[0])
     print("FA Network edge counts: ", GA_edgecounts[1])
     print("Rank-based test p-value: ", pval)
 
-rank_based_test(args.GI, args.ef, args.nb, args.nt)
+#rank_based_test(args.ef, args.GI, args.nb, args.nt)
 
 
-
+rank_based_test("C:\\Users\\ascol\\Downloads\\7711_Day3_Assignment2\\Assignment2\\Input.gmt.txt",
+                "C:\\Users\\ascol\\Downloads\\7711_Day3_Assignment2\\Assignment2\\STRING.txt" ,128,1000 )
 
 
 
