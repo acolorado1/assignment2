@@ -11,12 +11,13 @@ import scipy.stats as stats
 import argparse as arg
 
 parser = arg.ArgumentParser(description="Create two networks and determine whether their edge density is significantly different") #starting to make arguments
-parser.add_argument("--GI", "-gene_interaction_file", type=str, help="gene interaction file path", default="STRING.txt")
-parser.add_argument("--ef", "-experimental_file", type=str, help="experimental loci file path", default="Input.gmt.txt")
+parser.add_argument("--GI", "-gene_interaction_file", type=str, help="gene interaction file path (default STRING.txt)", default="STRING.txt")
+parser.add_argument("--ef", "-experimental_file", type=str, help="experimental loci file path (default Input.gmt.txt)", default="Input.gmt.txt")
 parser.add_argument("--nb", "-n_bins", type=int, help="number of bins (default: 128)", default=128)
 parser.add_argument("--nt", "-n_trials", type=int, help="number of trials (default: 1000)", default=1000)
 
 args = parser.parse_args()
+print(args)
 
 ####Gets the dict of loci and all the genes within each
 def dict_loci(f_experimental): #input .gmt file format path
