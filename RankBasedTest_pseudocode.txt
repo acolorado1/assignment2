@@ -93,5 +93,5 @@ n_trials -> number of trials (integer)
     prints "Rank-based test p-value: " and pval
 
 
-
-
+Call rank_based_test with command line arguments
+rank_based_test(args.ef, args.GI, args.nb, args.nt)
