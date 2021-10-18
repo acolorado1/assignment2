@@ -1,0 +1,97 @@
+Initialize parser arguments and assign to variable parser
+Add argument GI string default value 'STRING.txt'
+Add argument ef string default value 'Input.gmt.txt'
+Add argument nb integer default value 128
+Add argument nt integer default value 1000
+
+Parse arguments and assign to variable args
+
+Define function dict_loci that takes parameter f_experimental a .gmt formatted file path
+    f -> assign open file variable
+    loci_gene_dict -> Initialize empty dictionary
+    loci -> Initialize counter variable equal to 0
+    For every line in file
+        line -> Remove \n newline at the end of the line
+        line_list -> Make tab separated line into a list using split function
+        Add to the loci_gene_dict dictionary the loci(key) and everything after the second index in line_list (value)
+        Add 1 to loci variable
+    close file f
+    return loci_gene_dict dictionary
+
+Define function dict_gene_interactions that takes parameter f_cofunction_net a STRING.txt database file
+    f -> assign open file variable
+    gene_interaction_dict -> Initialize empty dictionary
+    connected_gene_weight -> Initialize empty dictionary
+    for every line in in file
+        line -> Remove \n newline at the end of the line and assign string to variable
+        line -> takes string variable and turns it to a list of 3 items using the split function
+        if string in first index of variable line does not exist in gene_interactions_dict
+            connected_gene_weight -> empty dictionary is reinitialized
+        adds to connected_gene_weight dictionary the first index item in line (key) and the second index item (value)
+        adds to gene_interaction_dict zero index item in line (key) and connected_gene_weight dictionary is updated (value)
+    close f file
+    return gene_interaction_dict dictionary
+
+Define listofedgecounts function that takes four parameters:
+f_experimental -> .gmt formatted file path (string)
+GI_file -> STRING.txt database file path (string)
+n_bins -> number of bins (integer)
+n_trials -> number of trials (integer)
+    loci_gene_dict -> calls dict_loci function using f_experimental parameter and assigns returned value
+    gene_interaction_dict -> calls dict_gene_interactions function using GI_file parameter and assigns returned value
+    num_connections_dict -> initializes empty dictionary
+    for every key in gene_interaction_dict:
+        adds to num_connections_dict key (as key) and length of key value from gene_interactions_dict (as value)
+    sorted_num_connections_list -> sorts num_connections_dict and makes list of key, value pairs
+    gene_bin_dict -> initializes empty dictionary
+    bin_genesinbin_dict -> initializes empty dictionary
+    for bin from 0 to n_bins:
+        list_of_genes -> initializes empty list
+        if bin does not equal the last bin number:
+            new_list_gene_degree_pairs -> creates list of gene, degree pairs in the current bin indexing from the current
+                                            bin to the next (i.e. if the bin is 0 it will index from 0 to 1*length of list
+                                            divided by the n_bins specified (128) so 131)
+        else:
+            new_list_gene_degree_pairs ->   creates list of gene, degree pairs in the current bin indexing from the current
+                                            bin to the next except in order to fined the last index it divides the length
+                                            of the list by 1 minus the number of bins specified to get the remainder
+        for each pair in the the new_list_gene_degree_pairs list:
+            Takes the key value and adds to the gene_bin_dict dictionary with value of current bin number
+            Appends gene name to list_of_genes list
+        Takes bin as key value and list of gene names from list_of_genes as values and adds them to bin_genesinbin_dict dictionary
+
+    edge_counts_experimental -> initializes empty list
+    edge_counts_CFN -> initializes empty list
+    for number from 0 to n_trials specified:
+        sum_counts -> initializes count variable
+        CFN_sum_counts -> initializes count variable
+        for every key in the loci_gene_dict dictionary:
+            rand_gene -> using choice function from random package chose random gene from list of values for current key
+            if rand_gene is in the num_connections_dict dictionary:
+                CFN_bin -> gets rand_gene's bin number from the gene_bin_dict
+                CFN_rand_gene -> using choice function from random package another random gene is chosen from list associated
+                                with the same bin number
+                CFN_sum_counts -> adds number of connections for CFN_rand_gene gotten from num_connections_dict
+                sum_counts -> adds number of connections for rand_gene gotten from num_connections_dict
+        Appends CFN_sum_counts to edge_counts_CFN list
+        Appends sum_counts to edge_counts_experimental list
+    returns list of two items: edge_counts_CFN and edge_counts_experimental
+
+Defines stub_GA function with one parameter experimental_and_CFN_edgecount_list a list of two lists
+    returns input
+
+Defines rank_based_test function that takes four parameters:
+f_experimental -> .gmt formatted file path (string)
+GI_file -> STRING.txt database file path (string)
+n_bins -> number of bins (integer)
+n_trials -> number of trials (integer)
+    calls listofedgecounts with input parameters and assigns returned value to list_of_ec list
+    GA_edgecounts -> calls stub_GA with input list_of_ec
+    pval -> calculates p-value using wilcoxon function from stats package on the two lists from GA_edgecounts list
+    prints "CFN edge counts: " and first list in GA_edgecounts list
+    prints "FA Network edge counts: " and second list in GA_edgecounts list
+    prints "Rank-based test p-value: " and pval
+
+
+
+

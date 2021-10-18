@@ -2,7 +2,7 @@
 
 ## DESCRIPTION: 
 
-RankBasedTest is a script that takes a STRING.txt file format and a .gmt 
+RankBasedTest is a script that takes a STRING.txt database file format and a .gmt 
 file format and generates two lists of edge counts from
 two networks and uses a rank based statistical test, specifically the Wilcoxon 
 signed rank test, to calculate a p-value that describes whether the two
