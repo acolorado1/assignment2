@@ -79,13 +79,20 @@ ARF5	PDIA2	0.157397
 ```
 ### Command
 
-To run this program: 
+To run this program in the command line interface type: 
 ```text
 python "RankBasedTest.py" --GI "STRING.txt" --ef "Input.gmt.txt" --nb 128 --nt 1000
 ```
 You can replace --GI and --ef with your own desired input files as well as change 
 the bin width (--nb) and the number of trials (--nt) you want to run.
 
+To run this program interactively type: 
+
+
+```python
+rank_based_test("Input.gmt.txt", "STRING.txt", 128, 1000)
+```
+If the input files are located in a different directory then you can put their respective file paths. 
 ### Output 
 
 Prints two lists of edge node densities and a corresponding p-value. 
@@ -95,8 +102,12 @@ CFN edge counts:  [383, 1156, 1707, 2534, 1401, 1088, 701, 1815, 1118, 3417, 120
 FA Network edge counts:  [385, 1111, 1674, 2678, 1312, 1105, 694, 1605, 1112, 3116, 1199, 534, 684, 2793, 693, 839,
 ...]
 Rank-based test p-value:  0.848256070030759
-
 ```
 ## Installation and Dependencies
-You must have Python 3 installed. Any Python 3 version should work but it was written in Python 3.9 using a Windows-
-based operating system. Packages random, scipy.stats, and argparse will need to be installed. 
+You must have Python 3 installed. Any Python 3 version should work but it was written in Python 3.9 using a Windows-based 
+operating system. Packages random, scipy.stats 1.7.1, and argparse 1.4.0 will need to be installed. 
+
+## Contact 
+Angela Sofia Burkhart Colorado - angelasofia.burkhartcolorado@cuanschutz.edu
+
+Project Link: https://github.com/acolorado1/assignment2.git
